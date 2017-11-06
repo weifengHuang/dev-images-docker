@@ -29,14 +29,15 @@ RUN source $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && nvm use default
+# add node and npm to path so the commands are available
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 # npm change source
 RUN npm config set registry https://registry.npm.taobao.org
 
 
 # install common tool
-RUN apt-get install -y iputils-ping
-    && apt-get -y install tmux
-    && apt-get -y install vim
+RUN apt-get install -y iputils-ping && apt-get -y install tmux && apt-get -y install vim
 
 #install npm common tool
 RUN npm install vue-cli -g
